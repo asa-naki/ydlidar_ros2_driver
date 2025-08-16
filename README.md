@@ -1,16 +1,18 @@
 ![YDLIDAR](images/YDLidar.jpg  "YDLIDAR")
+
 # YDLIDAR ROS2 Driver
 
 ydlidar_ros2_driver is a new ros package, which is designed to gradually become the standard driver package for ydlidar devices in the ros2 environment.
 
 ## How to [install ROS2](https://index.ros.org/doc/ros2/Installation)
+
 [ubuntu](https://index.ros.org/doc/ros2/Installation/Dashing/Linux-Install-Debians/)
 
 [windows](https://index.ros.org/doc/ros2/Installation/Dashing/Windows-Install-Binary/)
 
 ## How to Create a ROS2 workspace
-[Create a workspace](https://index.ros.org/doc/ros2/Tutorials/Colcon-Tutorial/#create-a-workspace)
 
+[Create a workspace](https://index.ros.org/doc/ros2/Tutorials/Colcon-Tutorial/#create-a-workspace)
 
 ## Build & Install YDLidar SDK
 
@@ -21,11 +23,11 @@ ydlidar_ros2_driver depends on YDLidar-SDK library. If you have never installed 
 
 ## Build ydlidar_ros2_driver
 
-1. Clone ydlidar_ros2_driver master branch from github for old version: 
+1. Clone ydlidar_ros2_driver master branch from github for old version:
 
    `git clone https://github.com/YDLIDAR/ydlidar_ros2_driver.git ydlidar_ros2_ws/src/ydlidar_ros2_driver`
 
-   Clone ydlidar_ros2_driver humble branch from github for humble,jazzy,etc: 
+   Clone ydlidar_ros2_driver humble branch from github for humble,jazzy,etc:
 
    `git clone -b humble https://github.com/YDLIDAR/ydlidar_ros2_driver.git ydlidar_ros2_ws/src/ydlidar_ros2_driver`
 
@@ -35,6 +37,7 @@ ydlidar_ros2_driver depends on YDLidar-SDK library. If you have never installed 
    cd ydlidar_ros2_ws
    colcon build --symlink-install
    ```
+
    Note: install colcon [see](https://index.ros.org/doc/ros2/Tutorials/Colcon-Tutorial/#install-colcon)
 
    ![CMAKE Finished](images/finished.png  "CMAKE Finished")
@@ -49,25 +52,31 @@ ydlidar_ros2_driver depends on YDLidar-SDK library. If you have never installed 
 
     Note: Add permanent workspace environment variables.
     It's convenientif the ROS2 environment variables are automatically added to your bash session every time a new shell is launched:
+
     ```
     echo "source ~/ydlidar_ros2_ws/install/setup.bash" >> ~/.bashrc
     source ~/.bashrc
     ```
+
 4. Confirmation
     To confirm that your package path has been set, printenv the `grep -i ROS` variable.
+
     ```
     printenv | grep -i ROS
     ```
+
     You should see something similar to:
         `OLDPWD=/home/tony/ydlidar_ros2_ws/install`
 
-5. Create serial port Alias [optional] 
+5. Create serial port Alias [optional]
+
     ```
     chmod 0777 src/ydlidar_ros2_driver/startup/*
     sudo sh src/ydlidar_ros2_driver/startup/initenv.sh
     ```
+
     Note: After completing the previous operation, replug the LiDAR again.
-	
+
 ## Configure LiDAR [Default parameter file](params/ydlidar.yaml)
 
 ```
@@ -97,54 +106,62 @@ ydlidar_ros2_driver_node:
     invalid_range_is_inf: false
     debug: false
 ```
+
 **`Note: It needs to be modified according to LiDAR actual situation,Or specify parameter files in the [launch file].py file.`**
-| Lidar	Type			| Parameter File		|
+
+| Lidar Type   | Parameter File  |
 |-------------------------------|-------------------------------|
-|G4 Lidar			|G4.yaml			|
-|X2/X2L Lidar			|X2.yaml			|
-|X4 Lidar			|X4.yaml			|
-|X4 Pro Lidar			|X4-Pro.yaml			|
-|TG15/TG30/TG50 Lidar		|TG.yaml			|
-|Tmini Pro/Tmini Plus		|Tmini.yaml			|
-|Tmini Plus SH			|Tmini-Plus-SH.yaml		|
-|TEA Lidar			|TEA.yaml			|
-|GS2 Lidar			|GS2.yaml			|
-|GS5 Lidar			|GS5.yaml			|
-|SDM15 Lidar			|sdm15.yaml			|
+|G4 Lidar   |G4.yaml   |
+|X2/X2L Lidar   |X2.yaml   |
+|X4 Lidar   |X4.yaml   |
+|X4 Pro Lidar   |X4-Pro.yaml   |
+|TG15/TG30/TG50 Lidar  |TG.yaml   |
+|Tmini Pro/Tmini Plus  |Tmini.yaml   |
+|Tmini Plus SH   |Tmini-Plus-SH.yaml  |
+|TEA Lidar   |TEA.yaml   |
+|GS2 Lidar   |GS2.yaml   |
+|GS5 Lidar   |GS5.yaml   |
+|SDM15 Lidar   |sdm15.yaml   |
 
 ## Run ydlidar_ros2_driver
 
 ##### Run ydlidar_ros2_driver using launch file
 
-The command format is : 
+The command format is :
 
  `ros2 launch ydlidar_ros2_driver [launch file].py`
 
 1. Connect LiDAR uint(s).
+
    ```
    ros2 launch ydlidar_ros2_driver ydlidar_launch.py 
    ```
-   or 
+
+   or
 
    ```
    launch $(ros2 pkg prefix ydlidar_ros2_driver)/share/ydlidar_ros2_driver/launch/ydlidar.py 
    ```
-2. RVIZ 
+
+2. RVIZ
+
    ```
    ros2 launch ydlidar_ros2_driver ydlidar_launch_view.py 
    ```
+
     ![View](images/view.png  "View")
 
 3. echo scan topic
+
    ```
    ros2 run ydlidar_ros2_driver ydlidar_ros2_driver_client or ros2 topic echo /scan
    ```
 
-#####  Launch file introduction
+##### Launch file introduction
 
-The driver offers users a wealth of options when using different launch file. The launch file directory    
+The driver offers users a wealth of options when using different launch file. The launch file directory
 
-is `"ydlidar_ros2_ws/src/ydlidar_ros2_driver/launch"`. All launch files are listed as below : 
+is `"ydlidar_ros2_ws/src/ydlidar_ros2_driver/launch"`. All launch files are listed as below :
 
 | launch file               | features                                                     |
 | ------------------------- | ------------------------------------------------------------ |
@@ -152,20 +169,18 @@ is `"ydlidar_ros2_ws/src/ydlidar_ros2_driver/launch"`. All launch files are list
 | ydlidar_launch.py         | Connect ydlidar.yaml Lidar specified by configuration parameters<br/>Publish LaserScan message on `scan` topic |
 | ydlidar_launch_view.py         | Connect ydlidar.yaml Lidar specified by configuration parameters and setup RVIZ<br/>Publish LaserScan message on `scan` topic |
 
-
-
 ## Publish Topic
+
 | Topic                | Type                    | Description                                      |
 |----------------------|-------------------------|--------------------------------------------------|
 | `scan`               | sensor_msgs/LaserScan   | 2D laser scan of the 0-angle ring                |
 
 ## Subscribe Service
+
 | Service                | Type                    | Description                                      |
 |----------------------|-------------------------|--------------------------------------------------|
 | `stop_scan`          | std_srvs::Empty   | turn off lidar                                         |
 | `start_scan`         | std_srvs::Empty   | turn on lidar                                          |
-
-
 
 ## Configure ydlidar_ros_driver internal parameter
 
@@ -197,12 +212,7 @@ The ydlidar_ros2_driver internal parameters are in the launch file, they are lis
 More paramters details, see [here](details.md)
 
 ## Contact EAI
+
 ![Development Path](images/EAI.png)
 
 If you have any extra questions, please feel free to [contact us](http://www.ydlidar.cn/cn/contact)
-
-
-
-
-
-

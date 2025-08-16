@@ -21,8 +21,10 @@ find_package(geometry_msgs REQUIRED)
 find_package(std_srvs REQUIRED)
 
 ############## YDLIDAR SDK START#####################################
-#find ydlidar_sdk package
-find_package(ydlidar_sdk REQUIRED)
+#find ydlidar_sdk_vendor package
+find_package(ydlidar_sdk_vendor REQUIRED)
+message(STATUS "YDLIDAR_SDK_INCLUDE_DIRS: ${YDLIDAR_SDK_INCLUDE_DIRS}")
+message(STATUS "YDLIDAR_SDK_LIBRARIES: ${YDLIDAR_SDK_LIBRARIES}")
 ############## YDLIDAR SDK END#####################################
 
 #Include directories
@@ -30,9 +32,6 @@ include_directories(
   ${PROJECT_SOURCE_DIR}
   ${PROJECT_SOURCE_DIR}/src
   ${YDLIDAR_SDK_INCLUDE_DIRS})
-
-#link library directories
-link_directories(${YDLIDAR_SDK_LIBRARY_DIRS})
 
 #---------------------------------------------------------------------------------------
 # generate excutable and add libraries
@@ -48,6 +47,7 @@ ament_target_dependencies(${PROJECT_NAME}_node
     "visualization_msgs"
     "geometry_msgs"
     "std_srvs"
+    "ydlidar_sdk_vendor"
     )
 
 target_link_libraries(${PROJECT_NAME}_node
